@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout – Place Order</title>
+
+  <!-- Google Font for a friendly look; optional -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --primary: #2e7d32;     /* brand accent (green)  */
+      --primary-dark: #236527;
+      --border:   #e0e0e0;
+      --bg-light: #fafafa;
+      --radius: 12px;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg-light);
+      color: #000000;
+      line-height: 1.45;
+    }
+    .one
+        {
+       text-align: center;
+       font-weight: 900;
+       color: rgb(0, 0, 0);
+       margin-top: 10px;
+    }
+    h1, h2 { margin: 0 0 .6em; font-weight: 600; }
+    a { color: var(--primary); text-decoration: none; }
+
+    /* ---------- Layout ---------- */
+    .wrapper {
+      max-width: 960px;
+      margin: 3rem auto;
+      display: grid;
+      gap: 2rem;
+      padding: 0 1rem;
+    }
+
+    /* Stack on small screens, 2-col on ≥ 768 px */
+    @media (min-width: 768px) {
+      .wrapper {
+        grid-template-columns: 3fr 2fr;
+        align-items: flex-start;
+      }
+    }
+
+    /* ---------- Card Component ---------- */
+    .card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,.04);
+      background-image: url( );
+    }
+
+    .card + .card { margin-top: 1.5rem; }
+
+    label {
+      display: block;
+      font-size: .85rem;
+      font-weight: 500;
+      margin-bottom: .25rem;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: .75rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font: inherit;
+      background: #eeeaea;
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: 2px solid var(--primary);
+      outline-offset: 1px;
+    }
+
+    .row {
+      display: flex;
+      gap: 1rem;
+    }
+    .row > * { flex: 1; }
+
+    /* ---------- Order Summary ---------- */
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      margin: .5rem 0;
+      font-size: .95rem;
+    }
+    .summary-item.total {
+      font-weight: 600;
+      border-top: 1px solid var(--border);
+      padding-top: .75rem;
+      margin-top: 1rem;
+      font-size: 1.05rem;
+    }
+
+    /* ---------- CTA Button ---------- */
+    .btn-primary {
+      display: inline-block;
+      width: 100%;
+      background: var(--primary);
+      color: #fff;
+      font-weight: 600;
+      padding: 1rem;
+      text-align: center;
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: background .2s ease;
+      margin-top: 1rem;
+      font-size: large;
+    }
+    .btn-primary:hover { background: var(--primary-dark); }
+
+
+
+
+    :root{
+        --brand: #0f8a5f;
+        --brand-light: #e7f9f2;
+        --radius: 1rem;
+    }
+
+    /* --- page scaffold --- */
+    body{
+        font-family: system-ui, sans-serif;
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        justify-content:center;
+        min-height:100vh;
+        margin:0;
+        background:#fafafa;
+    }
+    button{
+        padding:.8rem 2.2rem;
+        font-size:1rem;
+        background:var(--brand);
+        color:#fff;
+        border:none;
+        border-radius:var(--radius);
+        cursor:pointer;
+        transition:.2s;
+    }
+    button:hover{box-shadow:0 4px 16px rgb(0 0 0 /.18); transform:translateY(-2px)}
+
+    /* --- overlay --- */
+    .popup{
+        position:fixed;
+        inset:0;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        background:rgb(0 0 0 /.55);
+        opacity:0;
+        visibility:hidden;
+        transition:.35s;
+        z-index:999;
+    }
+    .popup.show{opacity:1;visibility:visible}
+
+    /* --- modal box --- */
+    .popup-card{
+        width:min(90%,400px);
+        background:#fff;
+        border-radius:var(--radius);
+        padding:2rem 2.2rem 2.4rem;
+        text-align:center;
+        animation:drop .45s cubic-bezier(.21,1.04,.54,1);
+        position:relative;
+    }
+    @keyframes drop{
+        0%{transform:translateY(-40px);opacity:.3}
+        100%{transform:translateY(0);opacity:1}
+    }
+
+    /* close (×) icon */
+    .close{
+        position:absolute;
+        top:.65rem; right:.9rem;
+        font-size:1.4rem;
+        color:#777; cursor:pointer;
+        transition:.2s;
+    }
+    .close:hover{color:#000}
+
+    /* checkmark circle */
+    .check{
+        width:70px;height:70px;
+        margin-inline:auto;
+        stroke-width:8;
+        stroke:var(--brand);
+        fill:var(--brand-light);
+        border-radius:50%;
+        margin-bottom:1.1rem;
+    }
+    h2{margin:0 0 .6rem; font-size:1.35rem; color:#333}
+    p{margin:.2rem 0 0; font-size:.92rem; color:#555}
+  </style>
+</head>
+
+<body>
+    <h1 class="one">Order Form</h1>
+  <form class="wrapper" method="post" action="/checkout/complete">
+    <!-- ---------- Customer Details ---------- -->
+    <section class="card">
+    
+      <h2>Contact&nbsp;Info</h2>
+      <div class="row">
+        <div>
+          <label for="first-name">First Name</label>
+          <input id="first-name" name="first_name" required />
+        </div>
+        <div>
+          <label for="last-name">Last Name</label>
+          <input id="last-name" name="last_name" required />
+        </div>
+      </div>
+
+      <label for="email">Email Address</label>
+      <input type="email" id="email" name="email" placeholder="you@example.com" required />
+
+      <label for="phone">Phone Number</label>
+      <input type="tel" id="phone" name="phone" placeholder="+91 98765 43210" required />
+     <br> <br>
+      <h2>Shipping&nbsp;Address</h2>
+      <label for="address">House No & Street  </label>
+      <input id="address" name="address" required />
+
+      <div class="row">
+        <div>
+          <label for="Town">Town</label>
+          <input id="Town" name="Town" required />
+        </div>
+        <div>
+          <label for="City">City</label>
+          <input id="City" name="City" required />
+        </div>
+      </div>
+
+      <div class="row">
+        <div>
+          <label for="zip">Pincode </label>
+          <input id="zip" name="zip" required />
+        </div>
+        <div>
+          <label for="State">State</label>
+          <select id="State" name="State" required>
+            
+            <option value="IN">TamilNadu</option>
+            <option value="US">Pondicherry</option>
+            <option value="GB">Others</option>
+            <!-- add the rest -->
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- Order Summary + Payment ---------- -->
+    <aside class="card">
+      <h2>Order&nbsp;Summary</h2>
+
+      <div class="summary-item">
+        <span>Subtotal</span>
+        <span>₹ 550.00</span>
+      </div>
+      <div class="summary-item">
+        <span>Shipping</span>
+        <span>₹ 75.00</span>
+      </div>
+      <div class="summary-item">
+        <span>Tax (GST)</span>
+        <span>₹ 55.00</span>
+      </div>
+      <div class="summary-item total">
+        <span>Total</span>
+        <span>₹ 680.00</span>
+      </div>
+      
+
+      <h2 style="margin-top:2rem;">Payment&nbsp;Info</h2>
+      <label for="card-number">Card Number</label>
+      <input id="card-number" name="card_number" placeholder="XXXX XXXX XXXX XXXX" maxlength="19" required />
+
+      <div class="row">
+        <div>
+          <label for="expiry">Expiry (MM/YY)</label>
+          <input id="expiry" name="expiry" placeholder="MM/YY" required />
+        </div>
+        <div>
+          <label for="cvv">CVV</label>
+          <input id="cvv" name="cvv" placeholder="123" maxlength="4" required />
+        </div>
+      </div>
+      <br>
+
+      <button class="btn-primary" id="placeOrderBtn">Place Order</button>
+
+       <!-- =======  POPUP  ======= -->
+    <div class="popup" id="successPopup">
+        <div class="popup-card">
+            <span class="close" id="closePopup">&times;</span>
+
+            <!-- Checkmark SVG -->
+            <svg class="check" viewBox="0 0 52 52">
+                <circle cx="26" cy="26" r="24" fill="none"/>
+                <path d="M14 27 l8 8 16 -16" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+
+            <h2>Order Placed Successfully!</h2>
+            <p>Thank you for shopping with us.  
+               We’ve emailed your confirmation.</p>
+        </div>
+    </div>
+    <script>
+    const popup     = document.getElementById('successPopup'),
+          placeBtn  = document.getElementById('placeOrderBtn'),
+          closeIcon = document.getElementById('closePopup');
+
+    // show on click
+    placeBtn.addEventListener('click', () => {
+        popup.classList.add('show');
+
+        // auto-dismiss after 4 s
+        setTimeout(()=> popup.classList.remove('show'), 4000);
+    });
+
+    // manual close
+    closeIcon.addEventListener('click', () => popup.classList.remove('show'));
+    // also hide if user clicks outside the card
+    popup.addEventListener('click', e => {
+        if(e.target === popup) popup.classList.remove('show');
+    });
+</script>
+    </aside>
+  </form>
+</body>
+</html>

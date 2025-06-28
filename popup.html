@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Order Confirmation Popup</title>
+
+<!-- =======  C S S  ======= -->
+<style>
+    :root{
+        --brand: #0f8a5f;
+        --brand-light: #e7f9f2;
+        --radius: 1rem;
+    }
+
+    /* --- page scaffold --- */
+    body{
+        font-family: system-ui, sans-serif;
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        justify-content:center;
+        min-height:100vh;
+        margin:0;
+        background:#fafafa;
+    }
+    button{
+        padding:.8rem 2.2rem;
+        font-size:1rem;
+        background:var(--brand);
+        color:#fff;
+        border:none;
+        border-radius:var(--radius);
+        cursor:pointer;
+        transition:.2s;
+    }
+    button:hover{box-shadow:0 4px 16px rgb(0 0 0 /.18); transform:translateY(-2px)}
+
+    /* --- overlay --- */
+    .popup{
+        position:fixed;
+        inset:0;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        background:rgb(0 0 0 /.55);
+        opacity:0;
+        visibility:hidden;
+        transition:.35s;
+        z-index:999;
+    }
+    .popup.show{opacity:1;visibility:visible}
+
+    /* --- modal box --- */
+    .popup-card{
+        width:min(90%,400px);
+        background:#fff;
+        border-radius:var(--radius);
+        padding:2rem 2.2rem 2.4rem;
+        text-align:center;
+        animation:drop .45s cubic-bezier(.21,1.04,.54,1);
+        position:relative;
+    }
+    @keyframes drop{
+        0%{transform:translateY(-40px);opacity:.3}
+        100%{transform:translateY(0);opacity:1}
+    }
+
+    /* close (×) icon */
+    .close{
+        position:absolute;
+        top:.65rem; right:.9rem;
+        font-size:1.4rem;
+        color:#777; cursor:pointer;
+        transition:.2s;
+    }
+    .close:hover{color:#000}
+
+    /* checkmark circle */
+    .check{
+        width:70px;height:70px;
+        margin-inline:auto;
+        stroke-width:8;
+        stroke:var(--brand);
+        fill:var(--brand-light);
+        border-radius:50%;
+        margin-bottom:1.1rem;
+    }
+    h2{margin:0 0 .6rem; font-size:1.35rem; color:#333}
+    p{margin:.2rem 0 0; font-size:.92rem; color:#555}
+</style>
+</head>
+
+<body>
+    <!-- Trigger -->
+    
+
+    <!-- =======  POPUP  ======= -->
+    <div class="popup" id="successPopup">
+        <div class="popup-card">
+            <span class="close" id="closePopup">&times;</span>
+
+            <!-- Checkmark SVG -->
+            <svg class="check" viewBox="0 0 52 52">
+                <circle cx="26" cy="26" r="24" fill="none"/>
+                <path d="M14 27 l8 8 16 -16" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+
+            <h2>Order Placed Successfully!</h2>
+            <p>Thank you for shopping with us.  
+               We’ve emailed your confirmation.</p>
+        </div>
+    </div>
+
+<!-- =======  J S  ======= -->
+<!-- <script>
+    const popup     = document.getElementById('successPopup'),
+          placeBtn  = document.getElementById('placeOrderBtn'),
+          closeIcon = document.getElementById('closePopup');
+
+    // show on click
+    placeBtn.addEventListener('click', () => {
+        popup.classList.add('show');
+
+        // auto-dismiss after 4 s
+        setTimeout(()=> popup.classList.remove('show'), 4000);
+    });
+
+    // manual close
+    closeIcon.addEventListener('click', () => popup.classList.remove('show'));
+    // also hide if user clicks outside the card
+    popup.addEventListener('click', e => {
+        if(e.target === popup) popup.classList.remove('show');
+    });
+</script> -->
+</body>
+</html>

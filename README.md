@@ -4,7 +4,7 @@ This project showcases a simple online shopping experience for clothing and foot
 built for users to browse, select, and order fashion products.
 
 # 🔭 Live Preview
-[TokyoJunction](tokyojunction.netlify.app)
+[https://tokyojunction.netlify.app](https://tokyojunction.netlify.app/)
 
 # 🛠️ Technologies Used
 - HTML5 – Structure and layout of the web pages

@@ -1,6 +1,10 @@
 # 🙇‍♂️ Tokyo Junction - Clothes & Footwear Shops
+
 This project showcases a simple online shopping experience for clothing and footwear 
 built for users to browse, select, and order fashion products.
+
+# 🔭 Live Preview
+[TokyoJunction](tokyojunction.netlify.app)
 
 # 🛠️ Technologies Used
 - HTML5 – Structure and layout of the web pages
